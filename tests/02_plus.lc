@@ -36,11 +36,23 @@ eval add_one_zero :
   =d> (\n f x -> f (n f x)) ZERO
   =b> (\f x -> f (ZERO f x))
   =d> (\f x -> f ((\f x -> x) f x))
-  =b> (\f x -> f ((\f -> f) x))
+  =b> (\f x -> f ((\x -> x) x))
   =b> (\f x -> f x)
   =d> ONE
 
 eval add_one_two :
   ADD ONE TWO 
-  -- (c) fill in your reductions here
+  =d> (\n m -> n SUC m) ONE TWO
+  =b> (\m -> ONE SUC m) TWO
+  =b> ONE SUC TWO
+  =d> (\f x -> f x) SUC TWO
+  =b> (\x -> SUC x) TWO
+  =b> SUC TWO
+  =d> (\n f x -> f (n f x)) TWO
+  =b> (\f x -> f (TWO f x))
+  =a> (\z x -> z (TWO z x))
+  =d> (\z x -> z ((\f x -> f (f x)) z x))
+  =b> (\z x -> z ((\x -> z (f x)) x))
+  =b> (\z x -> z (z (f x)))
+  =a> (\f x -> f (f (f x)))
   =d> THREE
