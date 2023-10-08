@@ -48,11 +48,7 @@ eval add_one_two :
   =d> (\f x -> f x) SUC TWO
   =b> (\x -> SUC x) TWO
   =b> SUC TWO
-  =d> (\n f x -> f (n f x)) TWO
-  =b> (\f x -> f (TWO f x))
-  =a> (\z x -> z (TWO z x))
-  =d> (\z x -> z ((\f x -> f (f x)) z x))
-  =b> (\z x -> z ((\x -> z (f x)) x))
-  =b> (\z x -> z (z (f x)))
-  =a> (\f x -> f (f (f x)))
+  =d> (\f x -> f (f x)) TWO
+  =b> (\x -> TWO (f x))
+
   =d> THREE
