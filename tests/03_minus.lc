@@ -30,7 +30,8 @@ let SND   = \p     -> p FALSE
 -- do not modify text BEFORE this line
 --------------------------------------------------------------------------------
 
-let SKIP1 = undefined       -- (a)
+                              -- if true --                -- else --
+let SKIP1 = \f p -> ITE (FST p) (PAIR TRUE (f (SND p))) (PAIR TRUE (SND p))       -- (a)
 let DECR  = undefined       -- (b)
 let SUB   = undefined       -- (c)
 let ISZ   = undefined       -- (d)
