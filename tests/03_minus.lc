@@ -30,11 +30,34 @@ let SND   = \p     -> p FALSE
 -- do not modify text BEFORE this line
 --------------------------------------------------------------------------------
 
-                              -- if TRUE --                -- else --
+-- Logic of SKIP1 --
+-- have an ITE statement with a condition of if TRUE aka (FST x) --
+-- then the first part of the pair is TRUE and the second part has the function applied --
+-- otherwise, the first part of the pair is TRUE and second part doesn't change --
+                          -- if TRUE --                   -- else --
 let SKIP1 = \f x -> ITE (FST x) (PAIR TRUE (f (SND x))) (PAIR TRUE (SND x))    -- (a)
+
+-- Logic of DECR --
+-- skips first application using SKIP1 to imitate INCR by n-1 --
+-- applied x amount times --
+-- need to return second part of pair --   
 let DECR  = \x -> SND (x (SKIP1 INCR) (PAIR FALSE ZERO))       -- (b)
+
+-- Logic of SUB --
+-- applying DECR to x, y amount of times 
 let SUB   = \x y -> y DECR x       -- (c)
+
+-- Logic of ISZ -- 
+-- check if f is ever applied --
+-- if it is, then it will b-reduce to (\y -> FALSE) TRUE which reduces to FALSE --
+-- otherwise, the number is zero and you will b-reduce to only TRUE --
 let ISZ   = \x -> x (\y -> FALSE) TRUE       -- (d)
+
+-- Logic of EQL --
+-- two conditions need to be true for the values to be equal --
+-- 1. the value of a - b should be equal to zero using ISZ --
+-- 2. the value of b - a should also be equal to zero using ISZ (no negative numbers) --
+-- if both of these are true, a and b are EQL and will return TRUE --
 let EQL   = \a b -> AND ((\a b -> ISZ (SUB a b)) a b) ((\a b -> ISZ (SUB a b)) b a)    -- (e)
 
 --------------------------------------------------------------------------------
